@@ -1,0 +1,78 @@
+### CREATION DES TABLES ###
+
+CREATE TABLE "membre" (
+	"username"	TEXT NOT NULL UNIQUE,
+	"points"	INTEGER,
+	"rank"	INTEGER,
+	"notes"	TEXT,
+	"rank_name"	TEXT DEFAULT 'T-1 Recrue',
+	PRIMARY KEY("username")
+);
+
+CREATE TABLE "robux" (
+	"username"	TEXT NOT NULL UNIQUE,
+	"éligible"	BOOLEAN,
+	"attente"	INTEGER,
+	"last"	TIMESTAMP,
+	"total"	INTEGER,
+	PRIMARY KEY("username")
+);
+
+CREATE TABLE "stats" (
+	"username"	TEXT,
+	"nb_message"	INTEGER,
+	"nb_cmd"	INTEGER,
+	"last_cmd_n"	TEXT,
+	"last_cmd_t"	TIMESTAMP,
+	PRIMARY KEY("username")
+);
+
+CREATE TABLE "config" (
+	"key"	TEXT,
+	"value"	INTEGER,
+	PRIMARY KEY("key")
+);
+
+### REQUETES INSERT ###
+INSERT INTO membre (username, points, rank, notes) VALUES 
+('jeteboufosor', 65, 8, 'créateur'),
+('Antoine', 12, 5, 'Officier actif'),
+('Thomas', 4, 3, 'Membre récent'),
+('Paul', 0, 1, 'Vient de rejoindre');
+
+INSERT INTO robux (username, éligible, attente, last, total) VALUES 
+('jeteboufosor', 1, 0, '2024-02-25', 1500),
+('Antoine', 1, 50, '2024-02-20', 300),
+('Thomas', 0, 10, 'Jamais', 0),
+('Paul', 0, 0, 'Jamais', 0);
+
+INSERT INTO stats (username, [nb message], [nb cmd], last_cmd_n, last_cmd_t) VALUES 
+('jeteboufosor', 150, 42, 42, '2024-02-25 14:00:00'),
+('Antoine', 80, 15, 15, '2024-02-24 10:30:00'),
+('Thomas', 12, 2, 2, '2024-02-21 09:15:00'),
+('Paul', 1, 0, 0, 'Jamais');
+
+INSERT INTO config(key,value) VALUES
+(log_count,0)
+
+### REQUETES WHERE ###
+
+-- 1. Affiche tous les membres qui sont au moins Sous-lieutenant (rank >= 5)
+SELECT username, rank FROM membre WHERE rank >= 5;
+
+-- 2. Affiche les membres qui sont éligibles aux robux
+SELECT username, total FROM robux WHERE éligible = 1;
+
+-- 3. (LIKE) Affiche les membres dont les notes contiennent le mot "créateur"
+SELECT username, notes FROM membre WHERE notes LIKE '%Fondateur%';
+
+###  REQUETES AVEC FONCTION D'AGREGATION + WHERE
+
+-- 4. Calcule la somme totale des robux distribués
+SELECT SUM(total) AS total_robux_distribues FROM robux WHERE éligible = 1;
+
+-- 5. Calcule la moyenne des points pour les membres qui ont un rank supérieur a 1 et qui ont comme premiere lettre t dans leur nom
+SELECT AVG(points) AS moyenne_points_gradés FROM membre WHERE rank > 1 AND username LIKE T%;
+
+-- 6. Trouve le nombre maximum de messages envoyés par un membre ayant utilisé plus de 10 commandes
+SELECT MAX([nb message]) AS record_messages FROM stats WHERE [nb cmd] > 10;

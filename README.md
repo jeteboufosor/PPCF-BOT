@@ -5,3 +5,4 @@ Ce bot Discord a été développé pour faciliter la gestion de mon groupe Roblo
 -- Technologies utilisées --
 discord.py
 python-dotenv
+SQLite

@@ -6,7 +6,7 @@ services:
       context: ../..
       dockerfile: Dockerfile
     image: ppcf-bot:latest
- environment:
-   - DISCORD_TOKEN:${DISCORD_TOKEN}
- volumes:
-   - /usr/src/app:${DB_PATH} 
+    environment:
+     - DISCORD_TOKEN:${DISCORD_TOKEN}
+    volumes:
+     - /usr/src/app:${DB_PATH} 

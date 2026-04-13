@@ -2,9 +2,7 @@ version: "3"
 services:
   PPCF-BOT:
     container_name: PPCF-BOT
-    build:
-      context: ../..
-      dockerfile: ./Dockerfile
+    build: .
     image: ppcf-bot:latest
     environment:
      - DISCORD_TOKEN:${DISCORD_TOKEN}

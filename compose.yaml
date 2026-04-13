@@ -5,6 +5,6 @@ services:
     build: .
     image: ppcf-bot:latest
     environment:
-     DISCORD_TOKEN:${DISCORD_TOKEN}
+     DISCORD_TOKEN: ${DISCORD_TOKEN}
     volumes:
      - /usr/src/app:${DB_PATH} 

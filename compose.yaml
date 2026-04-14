@@ -7,4 +7,5 @@ services:
     environment:
      DISCORD_TOKEN: ${DISCORD_TOKEN}
     volumes:
-     - /usr/src/app/data.db: ${DB_PATH} 
+      - ${DB_PATH}:/usr/src/app/data.db
+    restart: always
